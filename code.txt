@@ -1,0 +1,22 @@
+--Creating mysql db
+CREATE DATABASE IF NOT EXISTS empl;
+USE empl;
+
+--Creating table
+CREATE TABLE EMPLOYEE( id INT,
+name VARCHAR(50),
+department VARCHAR(50),
+salary INT,
+location VARCHAR(50));
+
+--Inserting data
+INSERT INTO employee(id,name,department,salary,location) values (1,'A','B',10000,'C'),(2,'D','E',20000,'F'),(3,'G','H',30000,'I'),
+(4,'J','K',40000,'L'),(5,'M','N',10000,'O'),(6,'P','Q',50000,'R'),(7,'S','T',60000,'U'),(8,'V','W',70000,'X'),(9,'Y','Z',80000,'A'),
+(10,'B','C',90000,'D');
+
+--import to hive table
+sqoop import --connect jdbc:mysql://localhost:3306/empl --username root -P --table EMPLOYEE --m 1 
+--target-dir /user/cloudera/output --fields-terminated-by  "," --hive-import --create-hive-table --hive-table employee
+
+--Viewing the hive table
+SELECT * FROM employee;
